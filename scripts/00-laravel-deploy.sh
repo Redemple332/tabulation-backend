@@ -9,9 +9,8 @@ php artisan config:cache
 echo "Caching routes..."
 php artisan route:cache
 
-# echo "Running migrations..."
-# php artisan migrate --force
+echo "Running migrations..."
+php artisan migrate
 
-# echo "Running seeders"
-# php artisan db:seed --class=CategorySeeder --force
-# php artisan db:seed --class=ProductSeeder --force
+echo "Running seeders"
+php artisan db:seed

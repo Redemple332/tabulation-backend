@@ -18,7 +18,7 @@ ENV DB_CONNECTION pgsql
 ENV DB_HOST dpg-cmh1fhfqd2ns73fneg30-a
 ENV DB_PORT 5432
 ENV DB_DATABASE tabulation
-ENV DB_USERNAME root
+ENV DB_USERNAME tabulation_user
 ENV DB_PASSWORD VdXd0N2uIMzpv9WgMSDuEdXULIiGFVwu
 
 # Allow composer to run as root

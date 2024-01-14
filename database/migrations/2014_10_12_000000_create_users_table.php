@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->integer('judge_no')->nullable();
-            $table->foreignUuid('category_id')->onDelete('set null');;
+            $table->foreignUuid('category_id')->onDelete('set null')->nullable();
             $table->string('description')->nullable();
             $table->foreignUuid('role_id')->nullable()->onDelete('set null');
             $table->boolean('is_active')->default(true);

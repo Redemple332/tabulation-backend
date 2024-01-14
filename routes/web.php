@@ -16,6 +16,13 @@ use Maatwebsite\Excel\Facades\Excel;
 |
 */
 
+Route::get('/', function () {
+    if (file_exists(public_path() . '/index.php')) {
+        return "Backend service last update was on " . date('Y-m-d H:i:s', filectime(public_path() . '/index.php'));
+    }
+    return "Backend service works!!";
+});
+
 Route::get('/test-pdf', function () {
     $pdf = Pdf::loadView('pdf.test');
     return $pdf->download('test-pdf.pdf');

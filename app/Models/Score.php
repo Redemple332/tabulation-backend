@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
-class Sponsor extends Model
+class Score extends Model
 {
     use HasFactory, HasUuids, SoftDeletes, LogsActivity;
 
@@ -47,5 +48,20 @@ class Sponsor extends Model
         ->logOnly($this->fillable)
         ->useLogName($this->table)
         ->logOnlyDirty();
+    }
+
+    public function judge() : BelongsTo
+    {
+       return $this->BelongsTo(User::class);
+    }
+
+    public function category() : BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function candidate() : BelongsTo
+    {
+        return $this->belongsTo(Candidate::class);
     }
 }

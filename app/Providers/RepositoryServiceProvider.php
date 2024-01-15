@@ -13,6 +13,8 @@ use App\Repository\Category\CategoryRepository;
 use App\Repository\Category\CategoryRepositoryInterface;
 use App\Repository\Event\EventRepository;
 use App\Repository\Event\EventRepositoryInterface;
+use App\Repository\Organizer\OrganizerRepository;
+use App\Repository\Organizer\OrganizerRepositoryInterface;
 use App\Repository\Permission\PermissionGroupRepository;
 use App\Repository\Permission\PermissionGroupRepositoryInterface;
 use App\Repository\Permission\PermissionRepository;
@@ -37,6 +39,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
         $this->app->bind(CandidateRepositoryInterface::class, CandidateRepository::class);
         $this->app->bind(EventRepositoryInterface::class, EventRepository::class);
+        $this->app->bind(OrganizerRepositoryInterface::class, OrganizerRepository::class);
     }
 
     /**

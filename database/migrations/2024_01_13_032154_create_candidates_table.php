@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('no');
             $table->string('gender', 50);
             $table->integer('age');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('contact')->nullable();
             $table->string('address')->nullable();
             $table->boolean('status');

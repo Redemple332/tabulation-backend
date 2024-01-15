@@ -4,7 +4,6 @@ namespace App\Repository\Category;
 
 use App\Models\Category;
 use App\Repository\Base\BaseRepository;
-use Illuminate\Validation\ValidationException;
 use App\Repository\Category\CategoryRepositoryInterface;
 
 

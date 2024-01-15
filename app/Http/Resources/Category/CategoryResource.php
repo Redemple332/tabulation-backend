@@ -24,6 +24,7 @@ class CategoryResource extends JsonResource
             'order' => $this->order,
             'isCurrent' => $this->isCurrent,
             'status' => $this->status,
+            'description' => $this->description,
         ];
     }
 }

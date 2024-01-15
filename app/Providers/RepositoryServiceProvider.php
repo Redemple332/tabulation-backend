@@ -7,6 +7,8 @@ use App\Repository\Role\RoleRepository;
 use App\Repository\User\UserRepository;
 use Illuminate\Support\ServiceProvider;
 use App\Repository\Base\BaseRepositoryInterface;
+use App\Repository\Candidate\CandidateRepository;
+use App\Repository\Candidate\CandidateRepositoryInterface;
 use App\Repository\Category\CategoryRepository;
 use App\Repository\Category\CategoryRepositoryInterface;
 use App\Repository\Permission\PermissionGroupRepository;
@@ -31,6 +33,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(PermissionGroupRepositoryInterface::class, PermissionGroupRepository::class);
         $this->app->bind(RolePermissionRepositoryInterface::class, RolePermissionRepository::class);
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
+        $this->app->bind(CandidateRepositoryInterface::class, CandidateRepository::class);
     }
 
     /**

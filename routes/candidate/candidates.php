@@ -3,8 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Candidate\CandidateController;
 
-
-Route::controller(CandidateController::class)->prefix('catecandidatesgories')->group(function () {
+Route::controller(CandidateController::class)->prefix('candidates')->group(function () {
     Route::get('/restore/{id}', 'restore')->name('candidates.restore');
     Route::get('/options', 'getOptions')->name('candidates.option');
 });

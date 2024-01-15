@@ -24,6 +24,8 @@ use App\Repository\Role\RolePermissionRepositoryInterface;
 use App\Repository\Role\RoleRepositoryInterface;
 use App\Repository\Score\ScoreRepository;
 use App\Repository\Score\ScoreRepositoryInterface;
+use App\Repository\Sponsor\SponsorRepository;
+use App\Repository\Sponsor\SponsorRepositoryInterface;
 use App\Repository\User\UserRepositoryInterface;
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -43,6 +45,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(EventRepositoryInterface::class, EventRepository::class);
         $this->app->bind(OrganizerRepositoryInterface::class, OrganizerRepository::class);
         $this->app->bind(ScoreRepositoryInterface::class, ScoreRepository::class);
+        $this->app->bind(SponsorRepositoryInterface::class, SponsorRepository::class);
     }
 
     /**

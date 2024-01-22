@@ -9,6 +9,8 @@ ENV PHP_ERRORS_STDERR 1
 ENV RUN_SCRIPTS 1
 ENV REAL_IP_HEADER 1
 
+
+ENV APP_URL=https://tabulation-backend.onrender.com
 # Laravel config
 ENV APP_KEY base64:Fu6lOrU7wx2kGSCWae2Lth4aVFiRC60pLhRupoK7PpY=
 ENV APP_ENV production

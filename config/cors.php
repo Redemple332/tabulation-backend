@@ -20,7 +20,10 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
-        'http://localhost:3000'
+        'http://localhost:8000',
+        'http://localhost:3000',
+        'http://localhost:8080',
+        'https://tabulation-backend.onrender.com'
     ],
     'allowed_origins_patterns' => [],
 

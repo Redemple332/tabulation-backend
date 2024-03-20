@@ -30,7 +30,7 @@ class UpdateUserRequest extends FormRequest
             'judge_no' => ['numeric'],
             'email' => ['required', 'email', 'string', 'max:255', Rule::unique('users')->ignore($this->route('user'))],
             'password' => ['required', 'min:6', 'max:16', 'string', 'confirmed'],
-            'is_active' => ['boolean'],
+            'is_active' => ['required'],
             'category_id' => ['required', 'exists:categories,id'],
             'role_id' => ['required', 'exists:roles,id'],
             'description' => ['nullable']

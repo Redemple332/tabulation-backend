@@ -24,7 +24,7 @@ class OrganizerRequest extends FormRequest
         return [
             'name' => ['required','string','max:50'],
             'position' => ['required', 'string'],
-            'image' => ['nullable','image','mimes:jpeg,png,jpg,gif','max:2048'],
+            'image' => ['nullable','string'],
             'description' => ['nullable','string', 'max:255']
         ];
     }

@@ -27,7 +27,7 @@ class CandidateRequest extends FormRequest
             'no' => ['required','numeric'],
             'gender' => ['required','string','max:50'],
             'age' => ['required','numeric'],
-            'image' => ['nullable','image','mimes:jpeg,png,jpg,gif','max:2048'],
+            'image' => ['nullable','string'],
             'contact' => ['nullable','string'],
             'address' => ['nullable','string'],
             'status' => ['required','boolean'],

@@ -2,12 +2,11 @@
 
 namespace App\Repository\Base;
 
-use App\Models\Document;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
-
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 abstract class BaseRepository implements BaseRepositoryInterface
 {
@@ -107,43 +106,6 @@ abstract class BaseRepository implements BaseRepositoryInterface
         // return $this->model->orderBy($sortByColumn, $sortByOrder)->paginate(request('limit') ?? 10);
     }
 
-    public function getPermittedList(array $search = [], array $relations = [], string $user = '', string $form_type='' , string $sortByColumn = 'created_at', string $sortByOrder = 'DESC')
-    {
-        if ($relations) {
-            $this->model = $this->model->with($relations);
-        }
-            //Different forms have their own different approvers and checkers, add the specific field here
-            $formTypeColumns = [
-                'COI' => ['approver_id'],
-                'GH' => ['endorser_id','approver_id'],
-                'TA' => ['approver_id']
-                //'ABC'
-                //TA
-            ];
-
-            $this->model = $this->model->where(function ($query) use ($user, $form_type, $formTypeColumns) {
-                //Compares all fields to user_id, if the user is the author of the record.
-                $query->where('user_id', $user);
-
-                //Compare sa columns above ung model if the field is available using OR CLAUSE
-                if (array_key_exists($form_type, $formTypeColumns)) {
-                    $columns = $formTypeColumns[$form_type];
-                    foreach ($columns as $column) {
-                        $query->orWhere(function ($query) use ($column, $user) {
-                            $query->where($column, $user);
-                        });
-                    }
-                }
-
-            });
-
-
-            if($this->model === null){
-                return 0;
-            }
-            return $this->model->filter($search)->orderBy($sortByColumn, $sortByOrder)->paginate(request('limit') ?? 10);
-    }
-
     public function getExportList(array $search = [], array $relations = [], string $sortByColumn = 'created_at', string $sortByOrder = 'ASC')
     {
         if ($relations) {
@@ -167,23 +129,24 @@ abstract class BaseRepository implements BaseRepositoryInterface
         ]);
     }
 
-    public function saveDocuments(Model $model, array $data = []){
-        $documents = [];
+    public function saveImage(string $folder, ?string $image){
 
-        if($model->documents){
-            $model->documents()->delete();
+        if($image)
+        {
+            $image = $image;
+            $image = str_replace('data:image/png;base64,', '', $image);
+            $image = str_replace(' ', '+', $image);
+            $imageName = Str::random(20) . '.' . 'png';
+            $targetDir = env('TABULATION_EVENT_NAME').'/images/'.$folder;
+            $publicPath = public_path($targetDir);
+
+            if (!File::exists($publicPath)) {
+                File::makeDirectory($publicPath, 0755, true);
+            }
+            $fullImagePath = $publicPath . '/' . $imageName;
+            File::put($fullImagePath, base64_decode($image));
+            return $imageName;
         }
-
-        foreach ($data as $document) {
-            $documents[] = new Document([
-                'user_id' => Auth::user()->id,
-                'name' => $document['filename'],
-                'path' => $document['path'],
-                'filename' => $document['filename'],
-                'description' => $document['description']
-            ]);
-        }
-
-        return $model->documents()->saveMany($documents);
+        return null;
     }
 }

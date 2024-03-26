@@ -24,8 +24,8 @@ class EventRequest extends FormRequest
         return [
             'name' => ['required','string','max:50'],
             'date' => ['required', 'string'],
-            'icon' => ['nullable','image','mimes:jpeg,png,jpg,gif','max:2048'],
-            'banner' => ['nullable','image','mimes:jpeg,png,jpg,gif','max:2048'],
+            'icon' => ['nullable','string'],
+            'banner' => ['nullable','string'],
             'category_id' => ['nullable', 'exists:categories,id'],
             'description' => ['nullable','string', 'max:255']
         ];

@@ -76,6 +76,11 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    public function category() : BelongsTo
+    {
+        return $this->BelongsTo(Category::class);
+    }
+
     public function scopeFilter($query)
     {
         $search = request('search') ?? false;

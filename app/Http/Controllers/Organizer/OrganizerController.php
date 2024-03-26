@@ -34,14 +34,18 @@ class OrganizerController extends Controller
 
     public function store(OrganizerRequest $request)
     {
-        $Organizer = $this->modelRepository->create($request->validated());
+        $validatedData = $request->validated();
+        $validatedData['image'] = $this->modelRepository->saveImage('organizers', $request->image);
+        $Organizer = $this->modelRepository->create($validatedData);
         $Organizer = new OrganizerResource($Organizer);
         return $this->responseService->storeResponse($this->name, $Organizer);
     }
 
     public function update(OrganizerRequest $request, $id)
     {
-        $Organizer = $this->modelRepository->update($request->validated(), $id);
+        $validatedData = $request->validated();
+        $validatedData['image'] = $this->modelRepository->saveImage('organizers', $request->image);
+        $Organizer = $this->modelRepository->update($validatedData, $id);
         $Organizer = new OrganizerResource($Organizer);
         return $this->responseService->updateResponse($this->name, $Organizer);
     }

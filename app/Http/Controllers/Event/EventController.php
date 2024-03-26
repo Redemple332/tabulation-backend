@@ -34,14 +34,20 @@ class EventController extends Controller
 
     public function store(EventRequest $request)
     {
-        $Event = $this->modelRepository->create($request->validated());
+        $validatedData = $request->validated();
+        $validatedData['icon'] = $this->modelRepository->saveImage('events/icon', $request->icon);
+        $validatedData['banner'] = $this->modelRepository->saveImage('events/banner', $request->banner);
+        $Event = $this->modelRepository->create($validatedData);
         $Event = new EventResource($Event);
         return $this->responseService->storeResponse($this->name, $Event);
     }
 
     public function update(EventRequest $request, $id)
     {
-        $Event = $this->modelRepository->update($request->validated(), $id);
+        $validatedData = $request->validated();
+        $validatedData['icon'] = $this->modelRepository->saveImage('events/icon', $request->icon);
+        $validatedData['banner'] = $this->modelRepository->saveImage('events/banner', $request->banner);
+        $Event = $this->modelRepository->update($validatedData, $id);
         $Event = new EventResource($Event);
         return $this->responseService->updateResponse($this->name, $Event);
     }

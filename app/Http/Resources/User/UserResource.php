@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\User;
 
+use App\Http\Resources\Category\CategoryResource;
 use App\Http\Resources\Role\RoleResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -26,10 +27,10 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'judge_no' => $this->judge_no,
             'is_active' => $this->is_active,
-            'category_id' => $this->category_id,
+            'category' => new CategoryResource($this->category),
             'description' => $this->description,
             'role_id' => $this->role_id,
-            'is_active' => $this->is_active,                                                                                                                                                                                                                
+            'is_active' => $this->is_active,
             'role' => new RoleResource($this->role),
         ];
     }

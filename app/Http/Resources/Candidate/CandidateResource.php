@@ -22,7 +22,7 @@ class CandidateResource extends JsonResource
             'no' => $this->no,
             'gender' => $this->gender,
             'age' => $this->age,
-            'image' => $this->image,
+            'image' => env('TABULATION_URL').'/' .env('TABULATION_NAME').'/images/candidates/'.$this->image,
             'contact' => $this->contact,
             'address' => $this->address,
             'status' => $this->status,

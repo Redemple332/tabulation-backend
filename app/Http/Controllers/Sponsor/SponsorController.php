@@ -34,14 +34,18 @@ class SponsorController extends Controller
 
     public function store(SponsorRequest $request)
     {
-        $Sponsor = $this->modelRepository->create($request->validated());
+        $validatedData = $request->validated();
+        $validatedData['image'] = $this->modelRepository->saveImage('sponsors', $request->image);
+        $Sponsor = $this->modelRepository->create($validatedData);
         $Sponsor = new SponsorResource($Sponsor);
         return $this->responseService->storeResponse($this->name, $Sponsor);
     }
 
     public function update(SponsorRequest $request, $id)
     {
-        $Sponsor = $this->modelRepository->update($request->validated(), $id);
+        $validatedData = $request->validated();
+        $validatedData['image'] = $this->modelRepository->saveImage('sponsors', $request->image);
+        $Sponsor = $this->modelRepository->update($validatedData, $id);
         $Sponsor = new SponsorResource($Sponsor);
         return $this->responseService->updateResponse($this->name, $Sponsor);
     }

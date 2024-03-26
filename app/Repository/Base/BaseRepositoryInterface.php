@@ -25,14 +25,12 @@ interface BaseRepositoryInterface
 
     public function getList();
 
-    public function getPermittedList();
-
     public function filter();
 
     public function getExportList();
 
     public function getOptions(string $attribute);
 
-    public function saveDocuments(Model $model, array $data);
+    public function saveImage(string $folder, ?string $image);
 
 }

@@ -34,14 +34,18 @@ class CandidateController extends Controller
 
     public function store(CandidateRequest $request)
     {
-        $Candidate = $this->modelRepository->create($request->validated());
+        $validatedData = $request->validated();
+        $validatedData['image'] = $this->modelRepository->saveImage('candidates', $request->image);
+        $Candidate = $this->modelRepository->create($validatedData);
         $Candidate = new CandidateResource($Candidate);
         return $this->responseService->storeResponse($this->name, $Candidate);
     }
 
     public function update(CandidateRequest $request, $id)
     {
-        $Candidate = $this->modelRepository->update($request->validated(), $id);
+        $validatedData = $request->validated();
+        $validatedData['image'] = $this->modelRepository->saveImage('candidates', $request->image);
+        $Candidate = $this->modelRepository->update($validatedData, $id);
         $Candidate = new CandidateResource($Candidate);
         return $this->responseService->updateResponse($this->name, $Candidate);
     }
@@ -60,7 +64,7 @@ class CandidateController extends Controller
 
     public function getOptions()
     {
-         $Candidates = $this->modelRepository->getOptions('name');
+        $Candidates = $this->modelRepository->getOptions('name');
         return $this->responseService->successResponse($this->name, $Candidates);
     }
 }

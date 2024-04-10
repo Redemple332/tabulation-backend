@@ -22,7 +22,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $Categorys = CategoryResource::collection($this->modelRepository->all());
+        $Categorys = CategoryResource::collection($this->modelRepository->getList([], [], 'order','ASC'));
         return $this->responseService->successResponse($this->name, $Categorys);
     }
 

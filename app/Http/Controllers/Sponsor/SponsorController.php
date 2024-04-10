@@ -44,7 +44,12 @@ class SponsorController extends Controller
     public function update(SponsorRequest $request, $id)
     {
         $validatedData = $request->validated();
-        $validatedData['image'] = $this->modelRepository->saveImage('sponsors', $request->image);
+        $image = $this->modelRepository->saveImage('sponsors', $request->image);
+        if ($image === null) {
+            unset($validatedData['image']);
+        } else {
+            $validatedData['image'] = $image;
+        }
         $Sponsor = $this->modelRepository->update($validatedData, $id);
         $Sponsor = new SponsorResource($Sponsor);
         return $this->responseService->updateResponse($this->name, $Sponsor);

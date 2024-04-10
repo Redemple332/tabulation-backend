@@ -22,7 +22,7 @@ class CandidateController extends Controller
 
     public function index()
     {
-        $Candidates = CandidateResource::collection($this->modelRepository->all());
+        $Candidates = CandidateResource::collection($this->modelRepository->getList([], [], 'no','ASC'));
         return $this->responseService->successResponse($this->name, $Candidates);
     }
 
@@ -44,7 +44,12 @@ class CandidateController extends Controller
     public function update(CandidateRequest $request, $id)
     {
         $validatedData = $request->validated();
-        $validatedData['image'] = $this->modelRepository->saveImage('candidates', $request->image);
+        $image = $this->modelRepository->saveImage('candidates', $request->image);
+        if ($image === null) {
+            unset($validatedData['image']);
+        } else {
+            $validatedData['image'] = $image;
+        }
         $Candidate = $this->modelRepository->update($validatedData, $id);
         $Candidate = new CandidateResource($Candidate);
         return $this->responseService->updateResponse($this->name, $Candidate);

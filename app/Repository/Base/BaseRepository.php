@@ -94,7 +94,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
         if ($relations) {
             $this->model = $this->model->with($relations);
         }
-        return $this->model->withTrashed()->orderBy($sortByColumn, $sortByOrder)->paginate(request('limit') ?? 10);
+        return $this->model->withTrashed()->orderBy($sortByColumn, $sortByOrder)->paginate(request('limit') ?? 100);
     }
 
     public function getList(array $search = [], array $relations = [], string $sortByColumn = 'created_at', string $sortByOrder = 'DESC')
@@ -133,19 +133,33 @@ abstract class BaseRepository implements BaseRepositoryInterface
 
         if($image)
         {
-            $image = $image;
-            $image = str_replace('data:image/png;base64,', '', $image);
-            $image = str_replace(' ', '+', $image);
-            $imageName = Str::random(20) . '.' . 'png';
-            $targetDir = env('TABULATION_EVENT_NAME').'/images/'.$folder;
-            $publicPath = public_path($targetDir);
-
-            if (!File::exists($publicPath)) {
-                File::makeDirectory($publicPath, 0755, true);
+            $image_extension = '';
+            if (strpos($image, 'data:image/png;base64,') === 0) {
+                $image_extension = 'png';
+            } elseif (strpos($image, 'data:image/jpeg;base64,') === 0) {
+                $image_extension = 'jpg';
+            } elseif (strpos($image, 'data:image/gif;base64,') === 0) {
+                $image_extension = 'gif';
             }
-            $fullImagePath = $publicPath . '/' . $imageName;
-            File::put($fullImagePath, base64_decode($image));
-            return $imageName;
+
+            if($image_extension) {
+                $image = str_replace('data:image/png;base64,', '', $image);
+                $image = str_replace('data:image/jpeg;base64,', '', $image);
+                $image = str_replace('data:image/gif;base64,', '', $image);
+                $image = str_replace(' ', '+', $image);
+
+                $imageName = Str::random(20) . '.' . $image_extension;
+
+                $targetDir = env('TABULATION_EVENT_NAME').'/images/'.$folder;
+                $publicPath = public_path($targetDir);
+
+                if (!File::exists($publicPath)) {
+                    File::makeDirectory($publicPath, 0755, true);
+                }
+                $fullImagePath = $publicPath . '/' . $imageName;
+                File::put($fullImagePath, base64_decode($image));
+                return $imageName;
+            }
         }
         return null;
     }

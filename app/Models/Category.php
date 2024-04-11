@@ -43,6 +43,14 @@ class Category extends Model
             }
         );
     }
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function($model){
+            $model->order = Category::max('order') + 1;
+        });
+    }
 
     public function getActivitylogOptions(): LogOptions
     {

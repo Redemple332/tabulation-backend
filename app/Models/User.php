@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -65,6 +66,14 @@ class User extends Authenticatable
         return Attribute::make(
             set: fn ($value) => bcrypt($value)
         );
+    }
+
+    public function getisDoneVotingAttribute(){
+        $category_id = Event::value('category_id');
+        $scoreCount = Score::where('category_id', $category_id)
+                           ->where('judge_id', Auth::id())
+                           ->count();
+        return $scoreCount > 0;
     }
 
     public function getFullNameAttribute(){

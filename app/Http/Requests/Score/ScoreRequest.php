@@ -24,9 +24,10 @@ class ScoreRequest extends FormRequest
         return [
             'judge_id' => ['required', 'exists:users,id'],
             'category_id' => ['required', 'exists:categories,id'],
-            'candidate_id' => ['required', 'exists:candidates,id'],
-            'score' => ['required', 'numeric'],
-            'description' => ['nullable','string', 'max:255']
+            'scores' => ['required', 'array'],
+            'scores.*.candidate_id' => ['required', 'exists:candidates,id'],
+            'scores.*.score' => ['required', 'numeric'],
+            'scores.*.description' => ['nullable', 'string', 'max:255'],
         ];
     }
 }

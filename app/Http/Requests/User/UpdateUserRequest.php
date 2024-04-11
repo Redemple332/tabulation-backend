@@ -31,7 +31,6 @@ class UpdateUserRequest extends FormRequest
             'email' => ['required', 'email', 'string', 'max:255', Rule::unique('users')->ignore($this->route('user'))],
             'password' => ['sometimes', 'min:6', 'max:16', 'string', 'confirmed'],
             'is_active' => ['required'],
-            'category_id' => ['required', 'exists:categories,id'],
             'role_id' => ['required', 'exists:roles,id'],
             'description' => ['nullable']
         ];

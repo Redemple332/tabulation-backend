@@ -70,12 +70,13 @@ class User extends Authenticatable
 
     public function getisDoneVotingAttribute(){
         $category_id = Event::value('category_id');
-        
+
         $scoreCount = Score::where('category_id', $category_id)
                            ->where('judge_id', Auth::id())
                            ->count();
         return $scoreCount > 0;
     }
+
 
     public function getFullNameAttribute(){
         return $this->first_name.' '. $this->last_name;

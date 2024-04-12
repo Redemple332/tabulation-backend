@@ -18,12 +18,12 @@ class ScoreResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            // 'id' => $this->id,
+            'id' => $this->id,
             'judge' => new UserResource($this->judge),
             'candidate' => new CandidateResource($this->candidate),
             'category' => new CategoryResource($this->category),
-            // 'score' => $this->score,
-            // 'description' => $this->description,
+            'score' => $this->score,
+            'description' => $this->description,
         ];
     }
 }

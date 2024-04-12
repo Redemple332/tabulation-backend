@@ -26,25 +26,24 @@ class ScoreRepository extends BaseRepository implements ScoreRepositoryInterface
 
     public function getScoreByCategory()
     {
-       return  $this->model->with(['judge', 'category', 'candidate' ])->scoreByCategory();
+       return  $this->model->with(['judge', 'category', 'candidate' ])->filter()->scoreByCategory()->get();
     }
 
     public function submitScoreJudge(array $data)
     {
-        if (Auth::user()->isDoneVoting) {
-            $this->errorReponse("Cannot submit score, voting is already done.");
-        }
 
-        $judgeId = $data['judge_id'] ?? null;
         $categoryId = $data['category_id'] ?? null;
 
         if (!Category::where('id', $categoryId)->active()->exists()) {
            $this->errorReponse("Category is not active.");
         }
+        if ($this->model->JudgeScore($categoryId)->count() > 0) {
+            $this->errorReponse("Cannot submit score, voting is already done.");
+        }
 
         foreach ($data['scores'] as $score) {
             $this->model->create([
-                 'judge_id' => $judgeId,
+                 'judge_id' => Auth::id(),
                  'category_id' => $categoryId,
                  'candidate_id' => $score['candidate_id'],
                  'score' => $score['score'],

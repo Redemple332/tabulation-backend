@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 class Score extends Model
@@ -25,6 +26,8 @@ class Score extends Model
     public function scopeFilter($query)
     {
         $search = request('search') ?? false;
+        $category_ids = request('category_ids') ?? false;
+
         $query->when(
             request('search')  ?? false,
             function ($query) use ($search) {
@@ -40,11 +43,27 @@ class Score extends Model
                 });
             }
         );
+
+        $query->when(
+            $category_ids,
+            function ($query) use ($category_ids) {
+                $query->whereIn('category_id', $category_ids);
+            }
+        );
+
+    }
+
+    public function scopeJudgeScore($query, $categoryId = null){
+        $category_id = $categoryId ? $categoryId : Event::value('category_id');
+        return $query->where('category_id', $category_id)
+        ->where('judge_id', Auth::id());
     }
 
     public function scopeScoreByCategory($query)
     {
-        return $query->groupBy('id','category_id', 'candidate_id')->get();
+        $query->selectRaw('category_id, candidate_id, AVG(score) as average_score')
+        ->groupBy('category_id', 'candidate_id')
+        ->orderBy('average_score', 'DESC');
     }
 
     public function getActivitylogOptions(): LogOptions

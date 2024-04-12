@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Score\ScoreResource;
 use App\Services\Utils\ResponseServiceInterface;
 use App\Http\Requests\Score\ScoreRequest;
+use App\Http\Resources\Score\ScoreByCategoryResources;
 use App\Repository\Score\ScoreRepositoryInterface;
 
 class ScoreController extends Controller
@@ -42,7 +43,7 @@ class ScoreController extends Controller
     public function scoreByCategory()
     {
         $Score =  $this->modelRepository->getScoreByCategory();
-        // $Score = new ScoreResource($Score);
+        $Score = ScoreByCategoryResources::collection($Score);
         return $this->responseService->successResponse($this->name, $Score);
     }
 

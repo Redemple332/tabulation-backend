@@ -22,6 +22,15 @@ class Event extends Model
         'description'
     ];
 
+    public function getNextCategoryAttribute()
+    {
+        $event = Event::first();
+        $nextCategory = Category::where('order', '>', $event->category->order)
+                        ->orderBy('order', 'asc')
+                        ->first();
+        return $nextCategory;
+    }
+
     public function scopeFilter($query)
     {
         $search = request('search') ?? false;
@@ -54,4 +63,6 @@ class Event extends Model
     {
         return $this->BelongsTo(Category::class);
     }
+
+
 }

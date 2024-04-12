@@ -25,12 +25,6 @@ class UserResource extends JsonResource
             'address' => $this->address,
             'email' => $this->email,
             'judge_no' => $this->judge_no,
-            'is_active' => $this->is_active,
-            'description' => $this->description,
-            'role_id' => $this->role_id,
-            'is_active' => $this->is_active,
-            'is_done' => $this->isDoneVoting,
-            'role' => new RoleResource($this->role)
         ];
     }
 }

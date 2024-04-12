@@ -15,14 +15,17 @@ class Category extends Model
     protected $fillable = [
         'name',
         'percentage',
-        'candidate_limit',
         'min_score',
         'max_score',
         'order',
-        'isCurrent',
         'status',
         'description',
     ];
+
+    public function scopeActive($query)
+    {
+        $query->where('status', 1);
+    }
 
     public function scopeFilter($query)
     {

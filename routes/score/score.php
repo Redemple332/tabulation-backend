@@ -7,5 +7,6 @@ Route::controller(ScoreController::class)->prefix('scores')->group(function () {
     Route::get('/restore/{id}', 'restore')->name('scores.restore');
     Route::get('/options', 'getOptions')->name('scores.option');
     Route::post('/submit-score-judge', 'submitScoreJudge')->name('scores.submitScoreJudge');
+    Route::get('/category', 'scoreByCategory')->name('scores.category');
 });
 Route::apiResource('scores', ScoreController::class);

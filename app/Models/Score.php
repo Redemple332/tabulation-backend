@@ -42,6 +42,11 @@ class Score extends Model
         );
     }
 
+    public function scopeScoreByCategory($query)
+    {
+        return $query->groupBy('id','category_id', 'candidate_id')->get();
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()

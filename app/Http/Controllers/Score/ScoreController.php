@@ -39,6 +39,13 @@ class ScoreController extends Controller
         return $this->responseService->storeResponse($this->name, $Score);
     }
 
+    public function scoreByCategory()
+    {
+        $Score =  $this->modelRepository->getScoreByCategory();
+        // $Score = new ScoreResource($Score);
+        return $this->responseService->successResponse($this->name, $Score);
+    }
+
     public function submitScoreJudge(ScoreRequest $request)
     {
         $Score = $this->modelRepository->submitScoreJudge($request->validated());

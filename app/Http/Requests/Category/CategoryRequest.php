@@ -24,12 +24,10 @@ class CategoryRequest extends FormRequest
         return [
             'name' => ['required','string','max:50'],
             'percentage' => ['required','numeric'],
-            'candidate_limit' => ['required','numeric'],
             'min_score' => ['required','numeric'],
             'max_score' => ['required','numeric'],
             'order' => ['required','numeric'],
             'status' => ['required','boolean'],
-            'isCurrent' => ['required','boolean'],
             'description' => ['nullable','string', 'max:255']
         ];
     }

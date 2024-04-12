@@ -18,11 +18,9 @@ class CategoryResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'percentage' => $this->percentage,
-            'candidate_limit' => $this->candidate_limit,
             'min_score' => $this->min_score,
             'max_score' => $this->max_score,
             'order' => $this->order,
-            'isCurrent' => $this->isCurrent,
             'status' => $this->status,
             'description' => $this->description,
         ];

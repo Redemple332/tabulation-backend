@@ -29,9 +29,13 @@ class Candidate extends Model
         return $this->first_name.' '. $this->last_name;
     }
 
+
+
     public function scopeFilter($query)
     {
         $search = request('search') ?? false;
+        $is_active = request('is_active') ?? false;
+
         $query->when(
             request('search')  ?? false,
             function ($query) use ($search) {
@@ -45,6 +49,12 @@ class Candidate extends Model
                         }
                     });
                 });
+            }
+        );
+
+        $query->when($is_active,
+            function ($query) use ($is_active) {
+                $query->where('status', $is_active);
             }
         );
     }

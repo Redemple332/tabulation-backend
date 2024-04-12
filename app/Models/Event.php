@@ -25,7 +25,8 @@ class Event extends Model
     public function getNextCategoryAttribute()
     {
         $event = Event::first();
-        $nextCategory = Category::where('order', '>', $event->category->order)
+
+        $nextCategory = Category::where('order', '>', $event->category?->order)
                         ->orderBy('order', 'asc')
                         ->first();
         return $nextCategory;

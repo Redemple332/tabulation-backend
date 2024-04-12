@@ -26,7 +26,9 @@ class Event extends Model
     {
         $event = Event::first();
 
-        $nextCategory = Category::where('order', '>', $event->category?->order)
+        $order = $event->category?->order ?? 0;
+
+        $nextCategory = Category::where('order', '>', $order)
                         ->orderBy('order', 'asc')
                         ->first();
         return $nextCategory;

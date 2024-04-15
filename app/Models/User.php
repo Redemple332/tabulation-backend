@@ -37,7 +37,6 @@ class User extends Authenticatable
         'category_id',
         'description',
         'role_id',
-        'is_active'
     ];
 
     /**
@@ -95,6 +94,8 @@ class User extends Authenticatable
     public function scopeFilter($query)
     {
         $search = request('search') ?? false;
+        $isJudges = request('isJudges') ?? false;
+
         $query->when(
             request('search')  ?? false,
             function ($query) use ($search) {
@@ -110,6 +111,11 @@ class User extends Authenticatable
                 });
             }
         );
+        $query->when($isJudges,
+        function ($query) {
+            $query->where('role_id', "b9612992-1e02-4572-b618-6bcd60d651ac");
+        }
+    );
     }
 
     public function getActivitylogOptions(): LogOptions

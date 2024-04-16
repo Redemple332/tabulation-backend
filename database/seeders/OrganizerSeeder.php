@@ -13,6 +13,7 @@ class OrganizerSeeder extends Seeder
      */
     public function run(): void
     {
+
         $organizers = [
             [
                 'name' => 'Organizer A',
@@ -46,6 +47,7 @@ class OrganizerSeeder extends Seeder
             ],
         ];
 
+        Organizer::truncate();
         foreach ($organizers as $organizer)
         {
             Organizer::create($organizer);

@@ -46,6 +46,8 @@ class SponsorSeeder extends Seeder
             ],
         ];
 
+
+        Sponsor::truncate();
         foreach ($sponsors as $sponsor)
         {
             Sponsor::create($sponsor);

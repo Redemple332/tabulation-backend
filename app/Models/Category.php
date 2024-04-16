@@ -30,6 +30,8 @@ class Category extends Model
     public function scopeFilter($query)
     {
         $search = request('search') ?? false;
+        $is_active = request('is_active') ?? false;
+
         $query->when(
             request('search')  ?? false,
             function ($query) use ($search) {
@@ -45,6 +47,12 @@ class Category extends Model
                 });
             }
         );
+
+        $query->when($is_active,
+        function ($query) use ($is_active) {
+            $query->where('status', $is_active);
+        }
+    );
     }
     protected static function boot(): void
     {

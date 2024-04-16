@@ -49,9 +49,9 @@ class EventController extends Controller
         $icon= $this->modelRepository->saveImage('events/icon', $request->icon);
         $banner= $this->modelRepository->saveImage('events/banner', $request->banner);
         if ($icon === null) {
-            unset($validatedData['image']);
+            unset($validatedData['icon']);
         } else {
-            $validatedData['image'] = $icon;
+            $validatedData['icon'] = $icon;
         }
         if ($banner === null) {
             unset($validatedData['image']);

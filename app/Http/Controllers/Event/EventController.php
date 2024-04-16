@@ -46,17 +46,17 @@ class EventController extends Controller
     public function update(EventRequest $request, $id)
     {
         $validatedData = $request->validated();
-        $icon= $this->modelRepository->saveImage('events/icon', $request->icon);
-        $banner= $this->modelRepository->saveImage('events/banner', $request->banner);
+        $icon = $this->modelRepository->saveImage('events/icon', $request->icon);
+        $banner = $this->modelRepository->saveImage('events/banner', $request->banner);
         if ($icon === null) {
             unset($validatedData['icon']);
         } else {
             $validatedData['icon'] = $icon;
         }
         if ($banner === null) {
-            unset($validatedData['image']);
+            unset($validatedData['banner']);
         } else {
-            $validatedData['image'] = $banner;
+            $validatedData['banner'] = $banner;
         }
         $Event = $this->modelRepository->update($validatedData, $id);
         $Event = new EventResource($Event);

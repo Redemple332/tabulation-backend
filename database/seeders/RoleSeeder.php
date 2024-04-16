@@ -29,8 +29,8 @@ class RoleSeeder extends Seeder
 
         $r = new Role();
         $r->id = "b9612992-1e02-4572-b618-6bcd60d651ac";
-        $r->name = 'User';
-        $r->description = 'User';
+        $r->name = 'Judge';
+        $r->description = 'Judge';
         $r->save();
     }
 }

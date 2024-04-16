@@ -13,6 +13,7 @@ class EventSeeder extends Seeder
      */
     public function run(): void
     {
+        Event::truncate();
         Event::create([
             'id' => "9955ffde-c38c-449a-9a27-3ebac65d405d",
             'name' => "Sample Name",

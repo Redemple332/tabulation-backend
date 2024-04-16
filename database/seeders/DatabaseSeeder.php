@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             EventSeeder::class,
             CategorySeeder::class,
             ScoreSeeder::class,
+            CandidateSeeder::class
         ]);
     }
 }

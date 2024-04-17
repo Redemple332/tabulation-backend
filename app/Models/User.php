@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -76,19 +77,8 @@ class User extends Authenticatable
         return $scoreCount > 0;
     }
 
-
-    public function getFullNameAttribute(){
-        return $this->first_name.' '. $this->last_name;
-    }
-
-    public function role(): BelongsTo
-    {
-        return $this->belongsTo(Role::class);
-    }
-
-    public function category() : BelongsTo
-    {
-        return $this->BelongsTo(Category::class);
+    public function getisVotedAttribute(){
+        $category_id = Event::value('category_id');
     }
 
     public function scopeFilter($query)
@@ -116,6 +106,31 @@ class User extends Authenticatable
             $query->where('role_id', "b9612992-1e02-4572-b618-6bcd60d651ac");
         }
     );
+    }
+
+    public function scores() : HasMany
+    {
+        return $this->hasMany(Score::class, 'judge_id');
+    }
+
+    public function scoresCurrentCategory() : HasMany
+    {
+        $category_id = Event::value('category_id');
+        return $this->hasMany(Score::class, 'judge_id')->where('category_id', $category_id);
+    }
+
+    public function getFullNameAttribute(){
+        return $this->first_name.' '. $this->last_name;
+    }
+
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function category() : BelongsTo
+    {
+        return $this->BelongsTo(Category::class);
     }
 
     public function getActivitylogOptions(): LogOptions

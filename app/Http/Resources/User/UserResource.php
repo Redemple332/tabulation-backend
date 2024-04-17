@@ -30,6 +30,7 @@ class UserResource extends JsonResource
             'role_id' => $this->role_id,
             'is_active' => $this->is_active,
             'is_done' => $this->isDoneVoting,
+            'is_voted'    => !$this->scoresCurrentCategory->isEmpty(),
             'role' => new RoleResource($this->role)
         ];
     }

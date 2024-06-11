@@ -8,6 +8,7 @@ use App\Services\Utils\ResponseServiceInterface;
 use App\Http\Requests\Score\ScoreRequest;
 use App\Http\Resources\Score\ScoreByCategoryResources;
 use App\Repository\Score\ScoreRepositoryInterface;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ScoreController extends Controller
 {
@@ -72,9 +73,9 @@ class ScoreController extends Controller
         return $this->responseService->restoreResponse($this->name);
     }
 
-    public function getOptions()
+    public function export()
     {
-         $Scores = $this->modelRepository->getOptions('name');
-        return $this->responseService->successResponse($this->name, $Scores);
+        $Score =  $this->modelRepository->getScoreByCategory();
+        return Pdf::loadView('pdf.test', compact('Score'))->download('test-pdf.pdf');
     }
 }

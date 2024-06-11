@@ -35,9 +35,10 @@ class CategoryScoreResource extends JsonResource
 
         // Rank candidates by average score and sort by candidate number
         $rankedCandidates = $candidates->sortBy('no')->values();
+        $judges = User::select('judge_no', 'first_name', 'last_name')->where('role_id', 'b9612992-1e02-4572-b618-6bcd60d651ac')->get();
 
         // Assign ranks and structure the judge scores
-        $rankedCandidates = $rankedCandidates->map(function ($candidate, $index) use ($rankedCandidates) {
+        $rankedCandidates = $rankedCandidates->map(function ($candidate, $index) use ($rankedCandidates, $judges) {
             $judgeScores = $candidate['scores']->map(function ($score) {
                 return [
                     'judge_no' => $score->judge->judge_no,
@@ -46,8 +47,7 @@ class CategoryScoreResource extends JsonResource
             });
 
             // Ensure all judges are accounted for, marking "Not Already Voted" for missing scores
-            $judgeCount = User::where('role_id', 'b9612992-1e02-4572-b618-6bcd60d651ac')->count();
-            $allJudgeNumbers = range(1, $judgeCount); // Assuming there are 5 judges
+            $allJudgeNumbers = range(1, $judges->count()); // Assuming there are 5 judges
 
             $judgeScores = collect($allJudgeNumbers)->map(function ($judgeNo) use ($judgeScores) {
                 $judgeScore = $judgeScores->firstWhere('judge_no', $judgeNo);
@@ -61,13 +61,14 @@ class CategoryScoreResource extends JsonResource
                 'candidate_no' => $candidate['candidate_no'],
                 'average' => round($candidate['average'], 2),
                 'rank' => $rankedCandidates->where('average', '>=', $candidate['average'])->count(),
-                'judge_score' => $judgeScores
+                'judge_score' => $judges
             ];
         });
 
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'header' => $judges,
             'judges_score' => $rankedCandidates
         ];
     }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -69,5 +70,15 @@ class Category extends Model
         ->logOnly($this->fillable)
         ->useLogName($this->table)
         ->logOnlyDirty();
+    }
+
+    public function scores() : HasMany
+    {
+        return $this->hasMany(Score::class)->orderBy('candidate_id')->orderBy('judge_id');
+    }
+
+    public function candidates()
+    {
+        return $this->scores()->with('candidate')->get()->pluck('candidate')->unique();
     }
 }

@@ -66,4 +66,9 @@ class Candidate extends Model
         ->useLogName($this->table)
         ->logOnlyDirty();
     }
+
+    public function scores()
+    {
+        return $this->hasMany(Score::class);
+    }
 }

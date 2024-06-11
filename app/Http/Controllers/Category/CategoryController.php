@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Category\CategoryResource;
 use App\Services\Utils\ResponseServiceInterface;
 use App\Http\Requests\Category\CategoryRequest;
+use App\Http\Resources\Category\CategoryScoreResource;
 use App\Repository\Category\CategoryRepositoryInterface;
 
 class CategoryController extends Controller
@@ -22,8 +23,8 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $Categorys = CategoryResource::collection($this->modelRepository->getList([], [], 'order','ASC'));
-        return $this->responseService->successResponse($this->name, $Categorys);
+        $Categories = CategoryResource::collection($this->modelRepository->getList([], [], 'order','ASC'));
+        return $this->responseService->successResponse($this->name, $Categories);
     }
 
     public function show($id)
@@ -58,9 +59,11 @@ class CategoryController extends Controller
         return $this->responseService->restoreResponse($this->name);
     }
 
-    public function getOptions()
+    public function scores()
     {
-         $Categorys = $this->modelRepository->getOptions('name');
-        return $this->responseService->successResponse($this->name, $Categorys);
+        $results = CategoryScoreResource::collection($this->modelRepository->getList([], ['scores','scores.judge'], 'order','ASC'));
+
+        return $this->responseService->successResponse($this->name, $results);
+
     }
 }

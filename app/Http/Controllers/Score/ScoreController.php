@@ -7,6 +7,7 @@ use App\Http\Resources\Score\ScoreResource;
 use App\Services\Utils\ResponseServiceInterface;
 use App\Http\Requests\Score\ScoreRequest;
 use App\Http\Resources\Score\ScoreByCategoryResources;
+use App\Http\Resources\Score\ScoreOverAllResource;
 use App\Repository\Score\ScoreRepositoryInterface;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -45,6 +46,13 @@ class ScoreController extends Controller
     {
         $Score =  $this->modelRepository->getScoreByCategory();
         $Score = ScoreByCategoryResources::collection($Score);
+        return $this->responseService->successResponse($this->name, $Score);
+    }
+
+    public function overAll()
+    {
+        $Score =  $this->modelRepository->getOverAll();
+        $Score = ScoreOverAllResource::collection($Score);
         return $this->responseService->successResponse($this->name, $Score);
     }
 

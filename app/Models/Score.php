@@ -66,6 +66,13 @@ class Score extends Model
         ->orderBy('average_score', 'DESC');
     }
 
+    public function scopeGroupByCandidate($query)
+    {
+        $query->selectRaw('candidate_id, AVG(score) as average_score')
+        ->groupBy('candidate_id')
+        ->orderBy('average_score', 'DESC');
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()

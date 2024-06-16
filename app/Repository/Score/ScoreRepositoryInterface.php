@@ -8,4 +8,6 @@ interface ScoreRepositoryInterface extends BaseRepositoryInterface
 {
     public function submitScoreJudge(array $data);
     public function getScoreByCategory();
+    public function getOverAll();
+
 }

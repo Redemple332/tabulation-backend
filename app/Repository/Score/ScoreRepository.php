@@ -29,6 +29,12 @@ class ScoreRepository extends BaseRepository implements ScoreRepositoryInterface
        return  $this->model->with(['judge', 'category', 'candidate' ])->filter()->scoreByCategory()->get();
     }
 
+
+    public function getOverAll()
+    {
+       return  $this->model->with(['judge', 'category', 'candidate' ])->filter()->groupByCandidate()->get();
+    }
+
     public function submitScoreJudge(array $data)
     {
 

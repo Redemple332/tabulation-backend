@@ -8,6 +8,8 @@ use App\Services\Utils\ResponseServiceInterface;
 use App\Http\Requests\Category\CategoryRequest;
 use App\Http\Resources\Category\CategoryScoreResource;
 use App\Repository\Category\CategoryRepositoryInterface;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -62,8 +64,16 @@ class CategoryController extends Controller
     public function scores()
     {
         $results = CategoryScoreResource::collection($this->modelRepository->getList([], ['scores','scores.judge'], 'order','ASC'));
-
         return $this->responseService->successResponse($this->name, $results);
+    }
 
+    public function export(Request $request)
+    {
+        $request->validate([
+            'category_id' => 'required|uuid'
+        ]);
+        $results = CategoryScoreResource::collection($this->modelRepository->getList([], ['scores','scores.judge'], 'order','ASC'));
+        $results = $results->toArray(request());
+        return Pdf::loadView('pdf.score.index', compact('results'))->setPaper('a4', 'landscape')->stream();
     }
 }

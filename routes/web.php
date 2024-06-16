@@ -1,6 +1,7 @@
 <?php
 
 use App\Exports\User\UserExport;
+use App\Http\Controllers\Score\ScoreController;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
@@ -34,4 +35,10 @@ Route::get('/test-excel-export', function () {
 
 Route::get('/test-excel-import', function () {
     return view('welcome');
+});
+
+
+Route::controller(ScoreController::class)->prefix('scores')->group(function () {
+    Route::get('/export', 'export')->name('scores.export');
+
 });

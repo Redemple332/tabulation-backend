@@ -73,9 +73,5 @@ class ScoreController extends Controller
         return $this->responseService->restoreResponse($this->name);
     }
 
-    public function export()
-    {
-        $Score =  $this->modelRepository->getScoreByCategory();
-        return Pdf::loadView('pdf.test', compact('Score'))->download('test-pdf.pdf');
-    }
+
 }

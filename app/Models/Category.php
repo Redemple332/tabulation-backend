@@ -32,6 +32,7 @@ class Category extends Model
     {
         $search = request('search') ?? false;
         $is_active = request('is_active') ?? false;
+        $category_id = request('category_id') ?? false;
 
         $query->when(
             request('search')  ?? false,
@@ -49,11 +50,13 @@ class Category extends Model
             }
         );
 
-        $query->when($is_active,
-        function ($query) use ($is_active) {
+        $query->when($is_active,function ($query) use ($is_active) {
             $query->where('status', $is_active);
-        }
-    );
+        });
+
+        $query->when($category_id,function ($query) use ($category_id) {
+            $query->where('id', $category_id);
+        });
     }
     protected static function boot(): void
     {

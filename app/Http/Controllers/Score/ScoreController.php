@@ -8,8 +8,10 @@ use App\Services\Utils\ResponseServiceInterface;
 use App\Http\Requests\Score\ScoreRequest;
 use App\Http\Resources\Score\ScoreByCategoryResources;
 use App\Http\Resources\Score\ScoreOverAllResource;
+use App\Models\Event;
 use App\Repository\Score\ScoreRepositoryInterface;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
 
 class ScoreController extends Controller
 {
@@ -54,6 +56,16 @@ class ScoreController extends Controller
         $Score =  $this->modelRepository->getOverAll();
         $Score = ScoreOverAllResource::collection($Score);
         return $this->responseService->successResponse($this->name, $Score);
+    }
+
+    public function overAllExport(Request $request)
+    {
+        $results =  $this->modelRepository->getOverAll();
+        $results = ScoreOverAllResource::collection($results);
+        $event = Event::where('id', '9955ffde-c38c-449a-9a27-3ebac65d405d')->first();
+
+        $results = $results->toArray(request());
+        return Pdf::loadView('pdf.score.over-all', compact('results', 'event'))->setPaper('a4', 'landscape')->stream();
     }
 
     public function submitScoreJudge(ScoreRequest $request)

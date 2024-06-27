@@ -10,6 +10,8 @@ Route::controller(ScoreController::class)->prefix('scores')->group(function () {
     Route::get('/category', 'scoreByCategory')->name('scores.category');
     Route::get('/category', 'scoreByCategory')->name('scores.category');
     Route::get('/over-all', 'overAll')->name('scores.over-all');
+    Route::get('/over-all/export', 'overAllExport')->name('scores.over-all.export');
+
 
 });
 Route::apiResource('scores', ScoreController::class);

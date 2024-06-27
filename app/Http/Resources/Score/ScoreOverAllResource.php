@@ -15,9 +15,10 @@ class ScoreOverAllResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
         return [
             'average_score' => number_format($this->average_score, 2),
-            'candidate_id' => new CandidateResource($this->candidate),
+            'candidate' => new CandidateResource($this->candidate),
         ];
     }
 }

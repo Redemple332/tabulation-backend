@@ -51,42 +51,29 @@
 <body>
     <div class="tabulation-sheet">
         <h4>{{ $event->name }}</h4>
-        <p>{{ $event->name }}<br> {{ $event->description }}</p>
+        <p>{{ $event->name }}<br> {{ $event->description }}<br></p>
         <h4>TABULATION SHEET</h4>
         <div class="table-responsive">
-            @forelse ($results as $result)
-                <h6>{{ $result['name'] }}</h6>
-                <table class="table table-bordered table-striped table-hover table-sm">
-                    <thead class="thead-dark">
+            <h6>Final</h6>
+            <table class="table table-bordered table-striped table-hover table-sm">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Contestant No.</th>
+                        <th>Name</th>
+                        <th>Average Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($results as $score)
                         <tr>
-                            <th>Contestant No.</th>
-                            @forelse ($result['headers'] as  $header)
-                                <th>{{ $header->judge_no }}</th>
-                            @empty
-                            @endforelse
-                            <th>Total</th>
-                            <th>Rank</th>
+                            <td>{{ $score['candidate']['no'] }}</td>
+                            <td>{{ $score['candidate']['full_name'] }}</td>
+                            <td>{{ $score['average_score'] }}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($result['judges_score'] as $score)
-                            <tr>
-                                <td>{{ $score['candidate_no'] }}</td>
-                                @forelse ($score['judge_score'] as $judge)
-                                    <td>Judge {{ $judge['judge_score'] }}</td>
-                                @empty
-                                @endforelse
-                                <td>{{ $score['average'] }}</td>
-                                <td>{{ $score['rank'] }}</td>
-                            </tr>
-                        @empty
-                        @endforelse
-
-                    </tbody>
-                </table>
-            @empty
-            @endforelse
-
+                    @empty
+                    @endforelse
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="text-center mt-5">

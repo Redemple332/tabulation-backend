@@ -7,6 +7,7 @@ use App\Http\Resources\Category\CategoryResource;
 use App\Services\Utils\ResponseServiceInterface;
 use App\Http\Requests\Category\CategoryRequest;
 use App\Http\Resources\Category\CategoryScoreResource;
+use App\Models\Event;
 use App\Repository\Category\CategoryRepositoryInterface;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -72,8 +73,9 @@ class CategoryController extends Controller
         $request->validate([
             'category_id' => 'required|uuid'
         ]);
+        $event = Event::where('id', '9955ffde-c38c-449a-9a27-3ebac65d405d')->first();
         $results = CategoryScoreResource::collection($this->modelRepository->getList([], ['scores','scores.judge'], 'order','ASC'));
         $results = $results->toArray(request());
-        return Pdf::loadView('pdf.score.index', compact('results'))->setPaper('a4', 'landscape')->stream();
+        return Pdf::loadView('pdf.score.index', compact('results', 'event'))->setPaper('a4', 'landscape')->stream();
     }
 }

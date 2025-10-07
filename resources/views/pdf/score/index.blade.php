@@ -45,6 +45,10 @@
             text-align: center;
             vertical-align: middle;
         }
+        .not-voted {
+            color: red;
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -61,10 +65,10 @@
                         <tr>
                             <th>Contestant No.</th>
                             @forelse ($result['headers'] as  $header)
-                                <th>{{ $header->judge_no }}</th>
+                                <th>Judge {{ $header->judge_no }}</th>
                             @empty
                             @endforelse
-                            <th>Total</th>
+                            <th>Total AVG</th>
                             <th>Rank</th>
                         </tr>
                     </thead>
@@ -73,7 +77,7 @@
                             <tr>
                                 <td>{{ $score['candidate_no'] }}</td>
                                 @forelse ($score['judge_score'] as $judge)
-                                    <td>Judge {{ $judge['judge_score'] }}</td>
+                                    <td class="{{ $judge['judge_score'] === 'Not Already Voted' ? 'not-voted' : '' }}" > {{ $judge['judge_score'] }}</td>
                                 @empty
                                 @endforelse
                                 <td>{{ $score['average'] }}</td>

@@ -150,7 +150,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
 
                 $imageName = Str::random(20) . '.' . $image_extension;
 
-                $targetDir = env('TABULATION_EVENT_NAME').'/images/'.$folder;
+                $targetDir = env('TABULATION_NAME').'/images/'.$folder;
                 $publicPath = public_path($targetDir);
 
                 if (!File::exists($publicPath)) {

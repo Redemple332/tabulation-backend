@@ -70,9 +70,9 @@ class CategoryController extends Controller
 
     public function export(Request $request)
     {
-        $request->validate([
-            'category_id' => 'required|uuid'
-        ]);
+        // $request->validate([
+        //     'category_id' => 'required|uuid'
+        // ]);
         $event = Event::where('id', '9955ffde-c38c-449a-9a27-3ebac65d405d')->first();
         $results = CategoryScoreResource::collection($this->modelRepository->getList([], ['scores','scores.judge'], 'order','ASC'));
         $results = $results->toArray(request());

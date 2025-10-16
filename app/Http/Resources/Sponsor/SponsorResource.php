@@ -18,7 +18,7 @@ class SponsorResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'position' => $this->position,
-            'image' => env('TABULATION_URL').'/' .env('TABULATION_NAME').'/images/sponsors/'.$this->image,
+            'image' => env('APP_URL').'/' .env('APP_NAME').'/images/sponsors/'.$this->image,
             'description' => $this->description,
         ];
     }

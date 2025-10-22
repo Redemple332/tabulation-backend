@@ -54,18 +54,18 @@ class ScoreController extends Controller
     public function overAll()
     {
         $Score =  $this->modelRepository->getOverAll();
-        $Score = ScoreOverAllResource::collection($Score);
+        //$Score = ScoreOverAllResource::collection($Score);
         return $this->responseService->successResponse($this->name, $Score);
     }
 
     public function overAllExport(Request $request)
     {
-        $results =  $this->modelRepository->getOverAll();
-        $results = ScoreOverAllResource::collection($results);
-        $event = Event::where('id', '9955ffde-c38c-449a-9a27-3ebac65d405d')->first();
+        // $results = ScoreOverAllResource::collection($results);
+        // $results = $results->toArray(request());
 
-        $results = $results->toArray(request());
-        return Pdf::loadView('pdf.score.over-all', compact('results', 'event'))->setPaper('a4', 'landscape')->stream();
+        $results =  $this->modelRepository->getOverAll();
+        $event = Event::where('id', '9955ffde-c38c-449a-9a27-3ebac65d405d')->first();
+        return Pdf::loadView('pdf.score.over-all', compact('results', 'event'))->setPaper('a4', 'portrait')->stream();
     }
 
     public function submitScoreJudge(ScoreRequest $request)

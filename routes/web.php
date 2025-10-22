@@ -5,7 +5,8 @@ use App\Http\Controllers\Category\CategoryController;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
-
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Score\ScoreController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,6 +19,7 @@ use Maatwebsite\Excel\Facades\Excel;
 */
 
 Route::get('/', function () {
+
     if (file_exists(public_path() . '/index.php')) {
         return "Backend service last update was on " . date('Y-m-d H:i:s', filectime(public_path() . '/index.php'));
     }
@@ -38,7 +40,7 @@ Route::get('/test-excel-import', function () {
 });
 
 
-Route::controller(CategoryController::class)->prefix('scores')->group(function () {
-    Route::get('/export', 'export')->name('scores.export');
+Route::controller(ScoreController::class)->prefix('scores')->group(function () {
+    Route::get('/over-all', 'overAllExport')->name('scores.over-all.export');
 
 });

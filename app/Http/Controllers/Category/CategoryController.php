@@ -77,7 +77,7 @@ class CategoryController extends Controller
         $results = CategoryScoreResource::collection($this->modelRepository->getList([], ['scores','scores.judge'], 'order','ASC'));
         $results = $results->toArray(request());
         return Pdf::loadView('pdf.score.index', compact('results', 'event'))
-    ->setPaper('a4', 'landscape')
-    ->download('scores.pdf');
+        ->setPaper('a4', 'portrait')
+        ->download('scores.pdf');
     }
 }

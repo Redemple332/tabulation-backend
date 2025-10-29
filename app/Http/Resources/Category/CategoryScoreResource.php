@@ -28,6 +28,7 @@ class CategoryScoreResource extends JsonResource
 
             return [
                 'candidate_no' => $candidate->no,
+                'candidate_name' => $candidate->fullname,
                 'total' => $total,
                 'average' => $average,
                 'scores' => $scores
@@ -76,6 +77,7 @@ class CategoryScoreResource extends JsonResource
             });
 
             return [
+                'candidate_name'=> $candidate['candidate_name'],
                 'candidate_no' => $candidate['candidate_no'],
                 'average' => round($candidate['average'], 2),
                 'rank' => $candidate['rank'],

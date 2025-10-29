@@ -63,7 +63,7 @@
                 <table class="table table-bordered table-striped table-hover table-sm">
                     <thead class="thead-dark">
                         <tr>
-                            <th>Contestant No.</th>
+                            <th style="text-align: left !important">Contestant</th>
                             @forelse ($result['headers'] as  $header)
                                 <th>Judge {{ $header->judge_no }}</th>
                             @empty
@@ -75,7 +75,7 @@
                     <tbody>
                         @forelse ($result['judges_score'] as $score)
                             <tr>
-                                <td>{{ $score['candidate_no'] }}</td>
+                                <td style="text-align: left !important">#{{ $score['candidate_no']}} - {{$score['candidate_name']}}</td>
                                 @forelse ($score['judge_score'] as $judge)
                                     <td class="{{ $judge['judge_score'] === 'Not Already Voted' ? 'not-voted' : '' }}" > {{ $judge['judge_score'] }}</td>
                                 @empty

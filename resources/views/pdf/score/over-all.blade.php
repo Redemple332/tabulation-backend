@@ -151,19 +151,17 @@
             <table class="table table-bordered table-sm">
                 <thead class="thead-light">
                     <tr>
-                        <th>Rank</th>
-                        <th>Candidate No.</th>
-                        <th>Candidate Name</th>
+                        <th style="text-align: left !important">Candidate</th>
                         <th>Final Score</th>
+                        <th>Rank</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($results as $candidate)
                         <tr>
-                            <td>{{ $candidate['rank'] }}</td>
-                            <td>{{ $candidate['candidate_no'] }}</td>
-                            <td>{{ $candidate['candidate_name'] }}</td>
+                            <td style="text-align: left !important">#{{ $candidate['candidate_no'] }} - {{ $candidate['candidate_name'] }}</td>
                             <td>{{ number_format($candidate['final_score'], 2) }}</td>
+                            <td>{{ $candidate['rank'] }}</td>
                         </tr>
                     @endforeach
                 </tbody>

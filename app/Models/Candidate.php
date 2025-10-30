@@ -56,7 +56,7 @@ class Candidate extends Model
             function ($query) use ($is_active) {
                 $query->where('status', $is_active);
             }
-        );
+        )->orderBy('no', 'ASC')->orderBy('gender', 'ASC');
     }
 
     public function getActivitylogOptions(): LogOptions

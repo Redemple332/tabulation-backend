@@ -34,6 +34,7 @@ class ScoreRepository extends BaseRepository implements ScoreRepositoryInterface
     public function getOverAll()
     {
         $categoryIds = request('category_ids');
+        $gender = request('gender'); // ✅ get gender from request
 
         $subQuery = DB::table('scores')
             ->select('candidate_id', 'category_id', DB::raw('AVG(score) as avg_score'))
@@ -46,6 +47,9 @@ class ScoreRepository extends BaseRepository implements ScoreRepositoryInterface
             ->mergeBindings($subQuery)
             ->join('categories as c', 'avg_scores.category_id', '=', 'c.id')
             ->join('candidates as cand', 'avg_scores.candidate_id', '=', 'cand.id')
+            ->when(!empty($gender), function ($query) use ($gender) {
+                $query->where('cand.gender', $gender);
+            })
             ->select(
                 DB::raw("CONCAT(cand.first_name, ' ', cand.last_name) as candidate_name"),
                 'cand.no',

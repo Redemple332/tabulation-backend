@@ -15,7 +15,18 @@ class CategoryScoreResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $scores = $this->scores;
+        // 🧩 Get gender filter from request (if any)
+        $gender = $request->get('gender');
+
+        // Load related scores with candidate and judge
+        $scores = $this->scores()->with(['candidate', 'judge'])->get();
+
+        // 🧩 Apply gender filter to scores (optional)
+        if ($gender) {
+            $scores = $scores->filter(function ($score) use ($gender) {
+                return strtolower($score->candidate->gender) === strtolower($gender);
+            });
+        }
 
         // Group scores by candidate
         $candidatesScores = $scores->groupBy('candidate_id');
@@ -89,9 +100,7 @@ class CategoryScoreResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'headers' => $judges,
-            'judges_score' => $rankedCandidates
+            'judges_score' => $rankedCandidates->values()
         ];
     }
 }
-
-

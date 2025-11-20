@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Score\ScoreController;
+use App\Exports\Score\ScoreReportExport;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,6 +33,7 @@ Route::get('/test-pdf', function () {
 });
 
 Route::get('/test-excel-export', function () {
+    // return Excel::download(new ScoreReportExport, 'score_report.xlsx');
     return Excel::download(new UserExport, 'users.xlsx');
 });
 

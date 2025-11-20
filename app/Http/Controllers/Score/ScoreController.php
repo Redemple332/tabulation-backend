@@ -11,6 +11,8 @@ use App\Http\Resources\Score\ScoreOverAllResource;
 use App\Models\Event;
 use App\Repository\Score\ScoreRepositoryInterface;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\Score\ScoreReportExport;
 use Illuminate\Http\Request;
 
 class ScoreController extends Controller
@@ -58,13 +60,23 @@ class ScoreController extends Controller
         return $this->responseService->successResponse($this->name, $Score);
     }
 
+
     public function overAllExport(Request $request)
     {
-        // $results = ScoreOverAllResource::collection($results);
-        // $results = $results->toArray(request());
+        $results =  $this->modelRepository->getOverAll();
+        $event = Event::where('id', '9955ffde-c38c-449a-9a27-3ebac65d405d')->first();
+        return Pdf::loadView('pdf.score.over-all', compact('results', 'event'))->setPaper('a4', 'portrait')->stream();
+    }
+
+    public function overAllExportExcel(Request $request)
+    {
 
         $results =  $this->modelRepository->getOverAll();
         $event = Event::where('id', '9955ffde-c38c-449a-9a27-3ebac65d405d')->first();
+        return Excel::download(
+            new ScoreReportExport($event, $results),
+            'tabulation.xlsx'
+        );
         return Pdf::loadView('pdf.score.over-all', compact('results', 'event'))->setPaper('a4', 'portrait')->stream();
     }
 

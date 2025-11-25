@@ -27,6 +27,9 @@ class Score extends Model
     {
         $search = request('search') ?? false;
         $category_ids = request('category_ids') ?? false;
+        $judge_id = request('judge_id') ?? false;
+        $candidate_id = request('candidate_id') ?? false;
+        $category_id = request('category_id') ?? false;
 
         $query->when(
             request('search')  ?? false,
@@ -48,6 +51,27 @@ class Score extends Model
             $category_ids,
             function ($query) use ($category_ids) {
                 $query->whereIn('category_id', $category_ids);
+            }
+        );
+
+        $query->when(
+            $category_id,
+            function ($query) use ($category_id) {
+                $query->where('category_id', $category_id);
+            }
+        );
+
+        $query->when(
+            $judge_id,
+            function ($query) use ($judge_id,) {
+                $query->where('judge_id', $judge_id,);
+            }
+        );
+
+        $query->when(
+            $candidate_id,
+            function ($query) use ($candidate_id) {
+                $query->where('candidate_id', $candidate_id);
             }
         );
 

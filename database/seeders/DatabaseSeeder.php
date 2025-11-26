@@ -18,9 +18,9 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             UserSeeder::class,
             EventSeeder::class,
-            CategorySeeder::class,
-            ScoreSeeder::class,
-            CandidateSeeder::class
+            // CategorySeeder::class,
+            // ScoreSeeder::class,
+            // CandidateSeeder::class
         ]);
     }
 }

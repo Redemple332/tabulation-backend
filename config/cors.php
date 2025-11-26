@@ -25,6 +25,9 @@ return [
         'http://localhost:8080',
         'http://localhost:8005',
         'https://tabulation-backend.onrender.com',
+        'http://10.201.102.1:8080',
+        'http://10.201.102.11:8080',
+        '*'
 
     ],
     'allowed_origins_patterns' => [],

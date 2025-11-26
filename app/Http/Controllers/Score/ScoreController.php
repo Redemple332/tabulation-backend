@@ -14,7 +14,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\Score\ScoreReportExport;
 use Illuminate\Http\Request;
-
+use App\Http\Requests\Score\UpdateScoreRequest;
 class ScoreController extends Controller
 {
     private $modelRepository;
@@ -86,7 +86,7 @@ class ScoreController extends Controller
         return $this->responseService->storeResponse($this->name, $Score);
     }
 
-    public function update(ScoreRequest $request, $id)
+    public function update(UpdateScoreRequest $request, $id)
     {
         $Score = $this->modelRepository->update($request->validated(), $id);
         $Score = new ScoreResource($Score);

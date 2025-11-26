@@ -29,7 +29,7 @@ class ScoreController extends Controller
 
     public function index()
     {
-        $Scores = ScoreResource::collection($this->modelRepository->all());
+        $Scores = ScoreResource::collection($this->modelRepository->getList());
         return $this->responseService->successResponse($this->name, $Scores);
     }
 

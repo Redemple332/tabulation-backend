@@ -17,7 +17,7 @@ class RoleSeeder extends Seeder
 
         $r = new Role();
         $r->id = "8787fc94-01e7-4f3b-a988-3b29409d0b76";
-        $r->name = 'SuperAdmin';
+        $r->name = 'Super Admin';
         $r->description = 'SuperAdmin';
         $r->save();
 

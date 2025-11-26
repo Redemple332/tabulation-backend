@@ -20,6 +20,10 @@ class Role extends Model
         'description',
     ];
 
+    const ROLE_JUDGE = 'Judge';
+    const ROLE_ADMIN = 'Admin';
+    const ROLE_SUPER_ADMIN = 'Super Admin';
+
     public function users(): HasMany
     {
         return $this->hasMany(User::class);

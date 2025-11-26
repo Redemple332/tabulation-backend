@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\Role;
 class ScoreRepository extends BaseRepository implements ScoreRepositoryInterface
 {
 
@@ -111,12 +111,17 @@ class ScoreRepository extends BaseRepository implements ScoreRepositoryInterface
 
         $categoryId = $data['category_id'] ?? null;
 
+        if( Auth::user()->role->name !== Role::ROLE_JUDGE){
+            $this->errorReponse("Only judge can submit score.");
+        }
+
         if (!Category::where('id', $categoryId)->active()->exists()) {
            $this->errorReponse("Category is not active.");
         }
         if ($this->model->JudgeScore($categoryId)->count() > 0) {
             $this->errorReponse("Cannot submit score, voting is already done.");
         }
+
 
         foreach ($data['scores'] as $score) {
             $this->model->create([

@@ -35,6 +35,7 @@ class User extends Authenticatable
         'password',
         'judge_no',
         'is_active',
+        'is_need_assistant',
         'category_id',
         'description',
         'role_id',

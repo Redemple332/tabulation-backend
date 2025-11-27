@@ -26,7 +26,7 @@ class StoreUserRequest extends FormRequest
             'last_name' => ['required', 'string', 'max:255', 'min:2'],
             'contact' => ['required', 'string', 'max:255', 'min:2'],
             'address' => ['required', 'string', 'max:255', 'min:2'],
-            'judge_no' => ['numeric'],
+            'judge_no' => ['nullable','numeric'],
             'email' => ['required', 'email', 'string', 'max:255', 'unique:users'],
             'password' => ['required', 'min:6', 'max:16', 'string', 'confirmed'],
             'is_active' => ['boolean'],

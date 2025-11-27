@@ -13,8 +13,8 @@ use App\Imports\User\UserImport;
 use App\Repository\User\UserRepositoryInterface;
 use App\Services\Utils\ResponseServiceInterface;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -73,6 +73,18 @@ class UserController extends Controller
     {
         $users = UserOptionResource::collection($this->modelRepository->all());
         return $this->responseService->successResponse($this->name, $users);
+    }
+
+    public function assistant(Request $request)
+    {
+        $params =  $request->validate([
+            'id' => 'required|exists:users,id',
+            'is_need_assistant' => 'required|boolean'
+        ]);
+
+        $user = $this->modelRepository->update($params, $params['id']);
+        $user = new UserResource($user);
+        return $this->responseService->updateResponse($this->name, $user);
     }
 
     public function export(){

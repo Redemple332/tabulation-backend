@@ -53,6 +53,7 @@ class EventController extends Controller
         } else {
             $validatedData['icon'] = $icon;
         }
+        
         if ($banner === null) {
             unset($validatedData['banner']);
         } else {

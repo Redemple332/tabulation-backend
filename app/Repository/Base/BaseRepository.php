@@ -102,7 +102,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
         if ($relations) {
             $this->model = $this->model->with($relations);
         }
-        return $this->model->filter($search)->orderBy($sortByColumn, $sortByOrder)->paginate(request('limit') ?? 10);
+        return $this->model->filter($search)->orderBy($sortByColumn, $sortByOrder)->paginate(request('limit') ?? 100);
         // return $this->model->orderBy($sortByColumn, $sortByOrder)->paginate(request('limit') ?? 10);
     }
 

@@ -45,6 +45,7 @@
             text-align: center;
             vertical-align: middle;
         }
+
         .not-voted {
             color: red;
             font-weight: bold;
@@ -60,14 +61,14 @@
         <div class="table-responsive">
             @forelse ($results as $result)
                 <h6>{{ $result['name'] }}</h6>
-                <table class="table table-bordered table-striped table-hover table-sm">
+                <table class="table table-bordered taScble-striped table-hover table-sm">
                     <thead class="thead-dark">
                         <tr>
                             <th style="text-align: left !important">Contestant</th>
-                            @forelse ($result['headers'] as  $header)
+                            {{-- @forelse ($result['headers'] as  $header)
                                 <th>Judge {{ $header->judge_no }}</th>
                             @empty
-                            @endforelse
+                            @endforelse --}}
                             <th>Total AVG</th>
                             <th>Rank</th>
                         </tr>
@@ -75,11 +76,12 @@
                     <tbody>
                         @forelse ($result['judges_score'] as $score)
                             <tr>
-                                <td style="text-align: left !important">#{{ $score['candidate_no']}} - {{$score['candidate_name']}}</td>
-                                @forelse ($score['judge_score'] as $judge)
+                                <td style="text-align: left !important">#{{ $score['candidate_no'] }} -
+                                    {{ $score['candidate_name'] }}</td>
+                                {{-- @forelse ($score['judge_score'] as $judge)
                                     <td class="{{ $judge['judge_score'] === 'Not Already Voted' ? 'not-voted' : '' }}" > {{ $judge['judge_score'] }}</td>
                                 @empty
-                                @endforelse
+                                @endforelse --}}
                                 <td>{{ $score['average'] }}</td>
                                 <td>{{ $score['rank'] }}</td>
                             </tr>

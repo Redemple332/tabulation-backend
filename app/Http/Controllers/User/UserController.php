@@ -30,7 +30,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $results =  $this->modelRepository->getList([request('search')], []);
+        $results =  $this->modelRepository->getList([request('search')], [], 'judge_no', 'ASC');
         return $this->responseService->successResponse(
             $this->name,
             new UserCollection($results)

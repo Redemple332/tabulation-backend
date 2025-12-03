@@ -60,7 +60,7 @@
         <h4>TABULATION SHEET</h4>
         <div class="table-responsive">
             @forelse ($results as $result)
-                <h6>{{ $result['name'] }}</h6>
+                <h6>{{ $result['name'] }} - {{ $result['percentage'] }}%</h6>
                 <table class="table table-bordered taScble-striped table-hover table-sm">
                     <thead class="thead-dark">
                         <tr>

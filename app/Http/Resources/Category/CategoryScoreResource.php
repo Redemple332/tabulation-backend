@@ -99,6 +99,9 @@ class CategoryScoreResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'percentage' => floor($this->percentage) == $this->percentage
+            ? number_format($this->percentage, 0)
+            : number_format($this->percentage, 2),
             'headers' => $judges,
             'judges_score' => $rankedCandidates->values()
         ];

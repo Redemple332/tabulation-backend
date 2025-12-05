@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
         $u->save();
 
         // Create Judges 1 to 9
-        for ($i = 1; $i <= 9; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             $u = new User();
             $u->id = Str::uuid()->toString(); // or manually set your own UUID format
             $u->first_name = 'Judge';

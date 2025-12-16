@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tabulation</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ public_path('css/bootstrap.css') }}">
+
 
     <style>
         body {
@@ -159,7 +160,8 @@
                 <tbody>
                     @foreach ($results as $candidate)
                         <tr>
-                            <td style="text-align: left !important">#{{ $candidate['candidate_no'] }} - {{ $candidate['candidate_name'] }}</td>
+                            <td style="text-align: left !important">#{{ $candidate['candidate_no'] }} -
+                                {{ $candidate['candidate_name'] }}</td>
                             <td>{{ number_format($candidate['final_score'], 2) }}</td>
                             <td>{{ $candidate['rank'] }}</td>
                         </tr>

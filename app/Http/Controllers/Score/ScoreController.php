@@ -85,7 +85,7 @@ class ScoreController extends Controller
     public function submitScoreJudge(ScoreRequest $request)
     {
         $Score = $this->modelRepository->submitScoreJudge($request->validated());
-        broadcast(new SubmitScore('submit score'));
+        broadcast(new SubmitScore('Submited Score'));
         return $this->responseService->storeResponse($this->name, $Score);
     }
 

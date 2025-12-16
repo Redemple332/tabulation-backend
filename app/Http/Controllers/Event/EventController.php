@@ -7,7 +7,7 @@ use App\Http\Resources\Event\EventResource;
 use App\Services\Utils\ResponseServiceInterface;
 use App\Http\Requests\Event\EventRequest;
 use App\Repository\Event\EventRepositoryInterface;
-
+use App\Events\NextCategory;
 class EventController extends Controller
 {
     private $modelRepository;
@@ -53,7 +53,7 @@ class EventController extends Controller
         } else {
             $validatedData['icon'] = $icon;
         }
-        
+
         if ($banner === null) {
             unset($validatedData['banner']);
         } else {
@@ -61,6 +61,7 @@ class EventController extends Controller
         }
         $Event = $this->modelRepository->update($validatedData, $id);
         $Event = new EventResource($Event);
+        broadcast(new NextCategory('Next Category'));
         return $this->responseService->updateResponse($this->name, $Event);
     }
 
@@ -68,6 +69,7 @@ class EventController extends Controller
     {
        $Event = $this->modelRepository->nextCategory();
        $Event = new EventResource($Event);
+       broadcast(new NextCategory('Next Category'));
        return $this->responseService->updateResponse($this->name, $Event);
 
     }

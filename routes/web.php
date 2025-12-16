@@ -8,6 +8,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Score\ScoreController;
 use App\Exports\Score\ScoreReportExport;
+use App\Events\SubmitScore;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,4 +46,10 @@ Route::get('/test-excel-import', function () {
 Route::controller(ScoreController::class)->prefix('scores')->group(function () {
     Route::get('/over-all', 'overAllExport')->name('scores.over-all.export');
 
+});
+
+
+Route::get('/send', function () {
+    broadcast(new SubmitScore('Hello Reverb!'));
+    return "Event has been sent!";
 });

@@ -15,6 +15,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\Score\ScoreReportExport;
 use Illuminate\Http\Request;
 use App\Http\Requests\Score\UpdateScoreRequest;
+use App\Events\SubmitScore;
+
 class ScoreController extends Controller
 {
     private $modelRepository;
@@ -83,6 +85,7 @@ class ScoreController extends Controller
     public function submitScoreJudge(ScoreRequest $request)
     {
         $Score = $this->modelRepository->submitScoreJudge($request->validated());
+        broadcast(new SubmitScore('submit score'));
         return $this->responseService->storeResponse($this->name, $Score);
     }
 

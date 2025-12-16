@@ -70,6 +70,7 @@ class ScoreRepository extends BaseRepository implements ScoreRepositoryInterface
                     'candidate_no' => $rows->first()->no,
                     'candidate_name' => $rows->first()->candidate_name,
                     'final_score' => round($rows->sum('weighted_score'), 2),
+                    'total' => $rows->sum('avg_per_category'),
                     'categories' => $rows->map(function ($r) {
                         return [
                             'category' => $r->category_name,
@@ -109,30 +110,44 @@ class ScoreRepository extends BaseRepository implements ScoreRepositoryInterface
     public function submitScoreJudge(array $data)
     {
 
+
+
         $categoryId = $data['category_id'] ?? null;
 
-        if( Auth::user()->role->name !== Role::ROLE_JUDGE){
-            $this->errorReponse("Only judge can submit score.");
+        DB::beginTransaction();
+
+        try {
+            if (Auth::user()->role->name !== Role::ROLE_JUDGE) {
+                $this->errorReponse("Only judge can submit score.");
+            }
+
+            if (!Category::where('id', $categoryId)->active()->exists()) {
+                $this->errorReponse("Category is not active.");
+            }
+
+            if ($this->model->JudgeScore($categoryId)->count() > 0) {
+                $this->errorReponse("Cannot submit score, voting is already done.");
+            }
+
+            foreach ($data['scores'] as $score) {
+                $this->model->create([
+                    'judge_id'     => Auth::id(),
+                    'category_id'  => $categoryId,
+                    'candidate_id' => $score['candidate_id'],
+                    'score'        => $score['score'],
+                    'description'  => $score['description'] ?? null,
+                ]);
+            }
+
+            DB::commit();
+
+            return $data;
+
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            throw $e; // or return error response
         }
 
-        if (!Category::where('id', $categoryId)->active()->exists()) {
-           $this->errorReponse("Category is not active.");
-        }
-        if ($this->model->JudgeScore($categoryId)->count() > 0) {
-            $this->errorReponse("Cannot submit score, voting is already done.");
-        }
-
-
-        foreach ($data['scores'] as $score) {
-            $this->model->create([
-                 'judge_id' => Auth::id(),
-                 'category_id' => $categoryId,
-                 'candidate_id' => $score['candidate_id'],
-                 'score' => $score['score'],
-                 'description' => $score['description']
-             ]);
-        }
-        return $data;
     }
 
     public function errorReponse($message)

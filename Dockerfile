@@ -17,13 +17,14 @@ ENV APP_ENV production
 ENV APP_DEBUG true
 
 ENV DB_CONNECTION pgsql
-ENV DB_HOST dpg-cmh1fhfqd2ns73fneg30-a
+ENV DB_HOST dpg-d6gji7ua2pns73fvlou0-a.oregon-postgres.render.com
 ENV DB_PORT 5432
-ENV DB_DATABASE tabulation
-ENV DB_USERNAME tabulation_user
-ENV DB_PASSWORD VdXd0N2uIMzpv9WgMSDuEdXULIiGFVwu
+ENV DB_DATABASE tabulation_p5j3
+ENV DB_USERNAME tabulation_p5j3_user
+ENV DB_PASSWORD JMXn17xAnH6B8PKmsjZQoc7zhX3OgeAk
 
 # Allow composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
 CMD ["/start.sh"]
+# PGPASSWORD=JMXn17xAnH6B8PKmsjZQoc7zhX3OgeAk psql -h dpg-d6gji7ua2pns73fvlou0-a.oregon-postgres.render.com -U tabulation_p5j3_user tabulation_p5j3
